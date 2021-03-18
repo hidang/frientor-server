@@ -4,11 +4,20 @@ import {
   NestModule,
   RequestMethod,
 } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { PreauthMiddleware } from '../auth/preauth.middlewate';
+import { User, UserSchema } from './schema/user.schema';
+import { Question, QuestionSchema } from './schema/question.schema';
+
 @Module({
-  imports: [],
+  imports: [
+    MongooseModule.forFeature([
+      { name: User.name, schema: UserSchema },
+      { name: Question.name, schema: QuestionSchema },
+    ]),
+  ],
   controllers: [UserController],
   providers: [UserService],
 })
