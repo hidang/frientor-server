@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { QuestionDto } from '../dto/question.dto';
 
 export type QuestionDocument = Question & Document;
 
@@ -16,3 +17,26 @@ export class Question {
 }
 
 export const QuestionSchema = SchemaFactory.createForClass(Question);
+
+QuestionSchema.static(
+  'EditQuestion',
+  async function (
+    user,
+    question: QuestionDto,
+  ): Promise<{
+    message: string;
+  }> {
+    try {
+      const quetionTemp = (await this.findById(
+        question._id,
+      )) as QuestionDocument;
+      if (user.uid != quetionTemp.uid)
+        return { message: 'User does not own this question' };
+      quetionTemp.content = question.content;
+      await quetionTemp.save();
+      return { message: 'edited question' };
+    } catch (error) {
+      return { message: error.message };
+    }
+  },
+);

@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { CommentDto } from '../dto/comment.dto';
 export type CommentDocument = Comment & Document;
 
 @Schema()
@@ -21,3 +22,26 @@ export class Comment {
 }
 
 export const CommentSchema = SchemaFactory.createForClass(Comment);
+
+CommentSchema.static(
+  'EditComment',
+  async function (
+    user,
+    question: CommentDto,
+  ): Promise<{
+    message: string;
+  }> {
+    try {
+      const commentTemp = (await this.findById(
+        question._id,
+      )) as CommentDocument;
+      if (user.uid != commentTemp.uid)
+        return { message: 'User does not own this question' };
+      commentTemp.content = question.content;
+      await commentTemp.save();
+      return { message: 'Edited question' };
+    } catch (error) {
+      return { message: error.message };
+    }
+  },
+);

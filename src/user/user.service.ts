@@ -3,7 +3,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from './schema/user.schema';
 
-// import { CommentDto } from '../question/dto/comment.dto';
 //-----------------------------------------------------------------------------
 @Injectable()
 export class UserService {
@@ -27,23 +26,4 @@ export class UserService {
       }
     }
   }
-  // async AddRepComment(
-  //   user: any,
-  //   Body: CommentDto,
-  // ): Promise<{ message: string }> {
-  //   if (!user) return { message: 'user not login' };
-  //   try {
-  //     const postNe: Comment = {
-  //       uid: user.uid,
-  //       content: Body.content,
-  //       questionId: Body.questionId,
-  //       date: Body.date,
-  //       repcoment: [],
-  //     };
-  //     await new this.commentModel(postNe).save();
-  //     return { message: 'saved' };
-  //   } catch (err) {
-  //     return { message: err };
-  //   }
-  // }
 }

@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-export type RepcommentDocument = Repcomment & Document;
+export type RepCommentDocument = RepComment & Document;
 
 @Schema()
-export class Repcomment {
+export class RepComment {
   @Prop({ required: true })
   uid: string;
   @Prop({ required: true })
@@ -13,4 +13,4 @@ export class Repcomment {
   date: Date;
 }
 
-export const RepcommentSchema = SchemaFactory.createForClass(Repcomment);
+export const RepCommentSchema = SchemaFactory.createForClass(RepComment);

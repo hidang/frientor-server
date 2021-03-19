@@ -1,11 +1,4 @@
-import {
-  Controller,
-  Request,
-  Post,
-  Get,
-  Body,
-  BadRequestException,
-} from '@nestjs/common';
+import { Controller, Request, Post } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 @ApiTags('/user')
@@ -13,14 +6,6 @@ import { UserService } from './user.service';
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
-  //test
-  // @Post('hello')
-  // getHello(@Request() request: Request) {
-  //   return {
-  //     hi: 'Hello ' + request['user']?.email + '!',
-  //     user: request['user'],
-  //   };
-  // }
   @Post('/register')
   async register(@Request() request: Request): Promise<{ message: string }> {
     //console.log(request.body);

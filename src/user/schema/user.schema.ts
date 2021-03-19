@@ -13,6 +13,13 @@ export class User {
 
   @Prop({ required: false })
   displayName: string;
+
+  // @Prop({ required: false })
+  // Location: {
+  //   Contry: string;
+  //   City: string;
+  //   Content: string
+  // };
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
