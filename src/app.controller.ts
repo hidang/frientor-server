@@ -6,6 +6,6 @@ export class AppController {
   @ApiExcludeEndpoint()
   @Get('/')
   Index() {
-    return { message: 'Hello DSC HCMUIT' };
+    return { message: 'Wellcome to DSC HCMUIT' };
   }
 }

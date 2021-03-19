@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { Repcomment } from './repcomment.schema';
 export type CommentDocument = Comment & Document;
 
 @Schema()
@@ -9,10 +8,16 @@ export class Comment {
   uid: string;
 
   @Prop({ required: true })
+  questionId: string;
+
+  @Prop({ required: true })
   content: string;
 
-  @Prop({ type: [Repcomment], default: [] })
-  repcoment: [];
+  @Prop({ required: true })
+  date: Date;
+
+  @Prop({ required: true })
+  repcoment: Array<any>;
 }
 
 export const CommentSchema = SchemaFactory.createForClass(Comment);
