@@ -13,7 +13,10 @@ import { QuestionModule } from './question/question.module';
   imports: [
     UserModule,
     QuestionModule,
-    MongooseModule.forRoot('mongodb://localhost:27017/frientor-data'),
+    MongooseModule.forRoot('mongodb://localhost:27017/frientor-data', {
+      //https://stackoverflow.com/questions/52572852/deprecationwarning-collection-findandmodify-is-deprecated-use-findoneandupdate
+      useFindAndModify: false,
+    }),
   ],
   controllers: [AppController],
 })

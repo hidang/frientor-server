@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
+import { Allow, IsString } from 'class-validator';
 
 export class RepCommentDto {
-  // @ApiProperty()
-  // @IsString()
-  // uid: string;
+  @ApiProperty({ required: false })
+  @Allow()
+  _id: any;
 
   @ApiProperty()
   @IsString()

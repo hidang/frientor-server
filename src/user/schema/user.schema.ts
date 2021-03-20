@@ -12,14 +12,16 @@ export class User {
   email: string;
 
   @Prop({ required: false })
-  displayName: string;
+  name: string;
 
-  // @Prop({ required: false })
-  // Location: {
-  //   Contry: string;
-  //   City: string;
-  //   Content: string
-  // };
+  @Prop({ required: false })
+  photoURL: string;
+
+  @Prop({ required: false })
+  bio: string;
+
+  @Prop({ required: false })
+  location: Array<string>;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

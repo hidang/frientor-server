@@ -46,8 +46,10 @@ export class QuestionService {
     questionId: string,
   ): Promise<{ message: string }> {
     try {
+      //check Question exist?
       const _question = await this.questionModel.findById(questionId);
       if (!_question) return { message: 'Question does not exist' };
+      //check use is own this question?
       if (_question.uid != user.uid)
         return { message: 'user does not own this question' };
       //FIXME: chưa tối ưa
@@ -57,9 +59,12 @@ export class QuestionService {
       return { message: err.message };
     }
   }
+
   //Comment
   async AddComment(user: any, Body: CommentDto): Promise<{ message: string }> {
     try {
+      const _question = await this.questionModel.findById(Body.questionId);
+      if (!_question) return { message: 'Question does not exist' };
       const _comment: Comment = {
         uid: user.uid,
         content: Body.content,
@@ -76,7 +81,6 @@ export class QuestionService {
   async EditComment(user: any, Body: CommentDto): Promise<{ message: string }> {
     return this.commentModel['EditComment'](user, Body);
   }
-
   async DeleteComment(
     user: any,
     commentId: string,
@@ -85,7 +89,7 @@ export class QuestionService {
       const _comment = await this.commentModel.findById(commentId);
       if (!_comment) return { message: 'Comment does not exist' };
       if (_comment.uid != user.uid)
-        return { message: 'user does not own this comment' };
+        return { message: 'User does not own this comment' };
       //FIXME: chưa tối ưu
       await this.commentModel.findByIdAndDelete(commentId);
       return { message: 'Deleted comment' };
@@ -93,6 +97,7 @@ export class QuestionService {
       return { message: err.message };
     }
   }
+
   //RepComment
   async AddRepComment(
     user: any,
@@ -100,22 +105,54 @@ export class QuestionService {
     idComment: string,
   ): Promise<{ message: string }> {
     try {
-      const repComment = {
+      //check CommentRoot exist?
+      const _commentRoot = await this.commentModel.findById(idComment);
+      if (!_commentRoot) return { message: 'CommentRoot does not exist' };
+      //create RepComment
+      const repComment: RepComment = {
         uid: user.uid,
+        commentId: idComment,
         content: Body.content,
         date: Body.date,
       };
-      //add id repComment to Comment root
-      const _comment = await this.commentModel.findByIdAndUpdate(
+      const _repComment = await new this.repCommentModel(repComment).save();
+      //add _id repComment to CommentRoot
+      await this.commentModel.findByIdAndUpdate(
         idComment,
-        { $push: { repcomment: repComment } },
+        { $push: { repcomment: _repComment._id } },
         // eslint-disable-next-line prettier/prettier
       );
-      console.log(_comment);
-      //FIXME: chua push vao array
       return { message: 'saved' };
     } catch (err) {
       return { message: err };
+    }
+  }
+  async EditRepComment(
+    user: any,
+    Body: RepCommentDto,
+  ): Promise<{ message: string }> {
+    return this.repCommentModel['EditRepComment'](user, Body);
+  }
+  async DeleteRepComment(
+    user: any,
+    repCommentId: string,
+  ): Promise<{ message: string }> {
+    try {
+      const _repComment = await this.repCommentModel.findById(repCommentId);
+      if (!_repComment) return { message: 'RepComment does not exist' };
+      if (_repComment.uid != user.uid)
+        return { message: 'User does not own this repcomment' };
+      //delete repcomment in repcomments collection
+      await this.repCommentModel.findByIdAndDelete(repCommentId);
+      //pop repcomment in comments collection
+      await this.commentModel.findByIdAndUpdate(
+        _repComment.commentId,
+        { $pull: { repcomment: _repComment._id } },
+        // eslint-disable-next-line prettier/prettier
+      );
+      return { message: 'Deleted repcomment' };
+    } catch (err) {
+      return { message: err.message };
     }
   }
 }
