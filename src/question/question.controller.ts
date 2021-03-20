@@ -49,6 +49,22 @@ export class QuestionController {
     }
   }
 
+  @Delete('/:id')
+  @ApiParam({ name: 'id', type: String })
+  async DeleteQuestion(
+    @Request() request: Request,
+    @Param() params,
+  ): Promise<{ message: string }> {
+    const user = request['user'];
+    if (!user) return { message: 'User not login' };
+    try {
+      return this.questionService.DeleteQuestion(user, params.id);
+    } catch (error) {
+      //catch
+      throw new BadRequestException(error);
+    }
+  }
+
   @Post('comment')
   async AddComment(
     @Request() request: Request,
@@ -79,7 +95,7 @@ export class QuestionController {
 
   @Delete('comment/:id')
   @ApiParam({ name: 'id', type: String })
-  async DeleteTodo(
+  async DeleteComment(
     @Request() request: Request,
     @Param() params,
   ): Promise<{ message: string }> {
@@ -93,19 +109,19 @@ export class QuestionController {
     }
   }
 
-  // @Post('repcomment/:idComment')
-  // @ApiParam({ name: 'idComment', type: String })
-  // async AddRepComment(
-  //   @Request() request: Request,
-  //   @Body() Body: RepCommentDto,
-  //   @Param() params,
-  // ): Promise<{ message: string }> {
-  //   const user = request['user'];
-  //   if (!user) return { message: 'User not login' };
-  //   try {
-  //     return this.questionService.AddRepComment(user, Body, params.idComment);
-  //   } catch (error) {
-  //     throw new BadRequestException(error);
-  //   }
-  // }
+  @Post('repcomment/:idComment')
+  @ApiParam({ name: 'idComment', type: String })
+  async AddRepComment(
+    @Request() request: Request,
+    @Body() Body: RepCommentDto,
+    @Param() params,
+  ): Promise<{ message: string }> {
+    const user = request['user'];
+    if (!user) return { message: 'User not login' };
+    try {
+      return this.questionService.AddRepComment(user, Body, params.idComment);
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
+  }
 }

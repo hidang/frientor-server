@@ -18,7 +18,7 @@ export class Comment {
   date: Date;
 
   @Prop({ required: true })
-  repcoment: Array<any>;
+  repcomment: Array<any>;
 }
 
 export const CommentSchema = SchemaFactory.createForClass(Comment);
