@@ -24,5 +24,8 @@ export class UserService {
     }
   }
 
+  async GetUserByUid(uid: string): Promise<UserDocument> {
+    return this.userModel['getUserByUid'](uid);
+  }
   // async EditUser(user: Request)
 }

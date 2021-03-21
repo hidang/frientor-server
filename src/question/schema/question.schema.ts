@@ -40,3 +40,18 @@ QuestionSchema.static(
     }
   },
 );
+
+QuestionSchema.static('getAllQuestion', async function (): Promise<
+  Document<Question>[]
+> {
+  return this.find({}, (err, questions) => {
+    return questions;
+  });
+});
+QuestionSchema.static('getQuestionById', async function (id: string): Promise<
+  Document<Question>[]
+> {
+  return this.findOne({ _id: id }, (err, question) => {
+    return question;
+  });
+});

@@ -18,6 +18,12 @@ export class QuestionService {
     private repCommentModel: Model<RepCommentDocument>,
   ) {}
   //Question
+  async GetAllQuestion(): Promise<QuestionDocument[]> {
+    return this.questionModel['getAllQuestion']();
+  }
+  async GetQuestionById(id: string): Promise<QuestionDocument[]> {
+    return this.questionModel['getQuestionById'](id);
+  }
   async AddQuestion(
     user: any,
     Body: QuestionDto,

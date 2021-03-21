@@ -1,5 +1,13 @@
-import { Controller, Request, Post } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import {
+  Controller,
+  Request,
+  Post,
+  Get,
+  Param,
+  BadRequestException,
+} from '@nestjs/common';
+import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
+import { UserDocument } from './schema/user.schema';
 import { UserService } from './user.service';
 @ApiTags('/user')
 @ApiBearerAuth()
@@ -14,5 +22,14 @@ export class UserController {
       return { message: 'User does not register' };
     }
     return await this.userService.Register(user);
+  }
+  @Get('/:uid')
+  @ApiParam({ name: 'uid', type: String })
+  async GetUserByUid(@Param() params): Promise<UserDocument> {
+    try {
+      return this.userService.GetUserByUid(params.uid);
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
   }
 }

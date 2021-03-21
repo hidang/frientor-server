@@ -14,6 +14,7 @@ import { QuestionService } from './question.service';
 import { CommentDto } from './dto/comment.dto';
 import { QuestionDto } from './dto/question.dto';
 import { RepCommentDto } from './dto/repComment.dto';
+import { QuestionDocument } from './schema/question.schema';
 
 @ApiTags('/question')
 @ApiBearerAuth()
@@ -21,6 +22,23 @@ import { RepCommentDto } from './dto/repComment.dto';
 export class QuestionController {
   constructor(private readonly questionService: QuestionService) {}
   //question
+  @Get('/')
+  async GetQuestionList(): Promise<QuestionDocument[]> {
+    try {
+      return this.questionService.GetAllQuestion();
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
+  }
+  @Get('/:id')
+  @ApiParam({ name: 'id', type: String })
+  async GetQuestioById(@Param() params): Promise<QuestionDocument[]> {
+    try {
+      return this.questionService.GetQuestionById(params?.id);
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
+  }
   @Post('/')
   async AddQuestion(
     @Request() request: Request,

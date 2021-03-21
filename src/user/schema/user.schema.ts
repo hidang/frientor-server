@@ -25,3 +25,9 @@ export class User {
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+
+UserSchema.static('getUserByUid', async function (uid): Promise<
+  Document<User>
+> {
+  return await this.findOne({ uid: uid });
+});
