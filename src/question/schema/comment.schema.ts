@@ -45,3 +45,11 @@ CommentSchema.static(
     }
   },
 );
+CommentSchema.static(
+  'GetAllCommentInQuestion',
+  async function (questionId): Promise<Document<Comment>[]> {
+    return this.find({ questionId: questionId }, (err, comments) => {
+      return comments;
+    });
+  },
+);

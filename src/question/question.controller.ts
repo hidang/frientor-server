@@ -84,15 +84,26 @@ export class QuestionController {
   }
 
   //comment
-  @Post('comment')
+  @Get('comment/:idQuestion')
+  @ApiParam({ name: 'idQuestion', type: String })
+  async GetCommentList(@Param() params): Promise<QuestionDocument[]> {
+    try {
+      return this.questionService.GetAllCommentInQuestion(params.idQuestion);
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
+  }
+  @Post('comment/:idQuestion')
+  @ApiParam({ name: 'idQuestion', type: String })
   async AddComment(
     @Request() request: Request,
     @Body() Body: CommentDto,
+    @Param() params,
   ): Promise<{ message: string }> {
     const user = request['user'];
     if (!user) return { message: 'User not login' };
     try {
-      return this.questionService.AddComment(user, Body);
+      return this.questionService.AddComment(user, Body, params.idQuestion);
     } catch (error) {
       throw new BadRequestException(error);
     }

@@ -67,14 +67,23 @@ export class QuestionService {
   }
 
   //Comment
-  async AddComment(user: any, Body: CommentDto): Promise<{ message: string }> {
+  async GetAllCommentInQuestion(
+    questionId: string,
+  ): Promise<CommentDocument[]> {
+    return this.commentModel['GetAllCommentInQuestion'](questionId);
+  }
+  async AddComment(
+    user: any,
+    Body: CommentDto,
+    idQuestion: string,
+  ): Promise<{ message: string }> {
     try {
       const _question = await this.questionModel.findById(Body.questionId);
       if (!_question) return { message: 'Question does not exist' };
       const _comment: Comment = {
         uid: user.uid,
         content: Body.content,
-        questionId: Body.questionId,
+        questionId: idQuestion,
         date: Body.date,
         repcomment: [],
       };
