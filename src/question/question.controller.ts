@@ -8,6 +8,8 @@ import {
   Put,
   Delete,
   Param,
+  CacheInterceptor,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
 import { QuestionService } from './question.service';
@@ -24,6 +26,7 @@ export class QuestionController {
   constructor(private readonly questionService: QuestionService) {}
   //question
   @Get('/')
+  @UseInterceptors(CacheInterceptor)
   async GetQuestionList(): Promise<QuestionDocument[]> {
     try {
       return this.questionService.GetAllQuestion();
@@ -86,6 +89,7 @@ export class QuestionController {
 
   //comment
   @Get('comment/:idQuestion')
+  @UseInterceptors(CacheInterceptor)
   @ApiParam({ name: 'idQuestion', type: String })
   async GetCommentList(@Param() params): Promise<QuestionDocument[]> {
     try {
@@ -140,6 +144,7 @@ export class QuestionController {
   }
 
   //repcomment
+  @UseInterceptors(CacheInterceptor)
   @Get('repcomment/:idComment')
   @ApiParam({ name: 'idComment', type: String })
   async GetAllRepCommentByIdComment(
