@@ -12,9 +12,5 @@ export class CommentDto {
 
   @ApiProperty()
   @IsString()
-  questionId: string;
-
-  @ApiProperty()
-  @IsString()
   date: Date;
 }

@@ -41,3 +41,12 @@ RepCommentSchema.static(
     }
   },
 );
+
+RepCommentSchema.static(
+  'getAllRepCommentnByIdComment',
+  async function (idComment: string): Promise<Document<RepComment>[]> {
+    return this.find({ commentId: idComment }, (err, repComment) => {
+      return repComment;
+    });
+  },
+);

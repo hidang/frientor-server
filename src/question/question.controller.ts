@@ -15,6 +15,7 @@ import { CommentDto } from './dto/comment.dto';
 import { QuestionDto } from './dto/question.dto';
 import { RepCommentDto } from './dto/repComment.dto';
 import { QuestionDocument } from './schema/question.schema';
+import { RepCommentDocument } from './schema/repComment.schema';
 
 @ApiTags('/question')
 @ApiBearerAuth()
@@ -139,6 +140,18 @@ export class QuestionController {
   }
 
   //repcomment
+  @Get('repcomment/:idComment')
+  @ApiParam({ name: 'idComment', type: String })
+  async GetAllRepCommentByIdComment(
+    @Param() params,
+  ): Promise<RepCommentDocument[]> {
+    try {
+      return this.questionService.GetAllRepCommentByIdComment(params.idComment);
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
+  }
+
   @Post('repcomment/:idComment')
   @ApiParam({ name: 'idComment', type: String })
   async AddRepComment(

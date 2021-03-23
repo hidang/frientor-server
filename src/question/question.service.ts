@@ -78,7 +78,7 @@ export class QuestionService {
     idQuestion: string,
   ): Promise<{ message: string }> {
     try {
-      const _question = await this.questionModel.findById(Body.questionId);
+      const _question = await this.questionModel.findById(idQuestion);
       if (!_question) return { message: 'Question does not exist' };
       const _comment: Comment = {
         uid: user.uid,
@@ -114,6 +114,11 @@ export class QuestionService {
   }
 
   //RepComment
+  async GetAllRepCommentByIdComment(
+    idComment: string,
+  ): Promise<RepCommentDocument[]> {
+    return this.repCommentModel['getAllRepCommentnByIdComment'](idComment);
+  }
   async AddRepComment(
     user: any,
     Body: RepCommentDto,
