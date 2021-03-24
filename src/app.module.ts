@@ -9,11 +9,12 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { UserModule } from './user/user.module';
 import { QuestionModule } from './question/question.module';
-
+import { ChatModule } from './chat/chat.module';
 @Module({
   imports: [
     UserModule,
     QuestionModule,
+    ChatModule,
     MongooseModule.forRoot('mongodb://localhost:27017/frientor-data', {
       //https://stackoverflow.com/questions/52572852/deprecationwarning-collection-findandmodify-is-deprecated-use-findoneandupdate
       useFindAndModify: false,
