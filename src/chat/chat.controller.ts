@@ -17,26 +17,26 @@ import { ChatDocument } from './schema/chat.schema';
 @Controller('chat')
 export class ChatController {
   constructor(private readonly chatService: ChatService) {}
-  @Get('/')
+  @Get('/:idComment')
   @ApiParam({ name: 'idComment', type: String })
-  async GetChithubOfUserInComment(
+  async GetChatInfoOfUserInComment(
     @Request() request: Request,
     @Param() params,
   ): Promise<any> {
     const user = request['user'];
     if (!user) return { message: 'User does not login' };
     try {
-      return this.chatService.GetChithubOfUserInComment(
+      return this.chatService.GetChatInfoOfUserInComment(
         user?.uid,
-        params.IdComment,
+        params.idComment,
       );
     } catch (error) {
       throw new BadRequestException(error);
     }
   }
-  @Post('/')
+  @Post('/:idComment')
   @ApiParam({ name: 'idComment', type: String })
-  async CreateChithubOfUserInComment(
+  async CreateChatOfUserInComment(
     @Request() request: Request,
     @Param() params,
     @Body() Body: ChatDto,
@@ -44,7 +44,7 @@ export class ChatController {
     const user = request['user'];
     if (!user) return { message: 'User does not login' };
     try {
-      return this.chatService.CreateChithubOfUserInComment(
+      return this.chatService.CreateChatOfUserInComment(
         user?.uid,
         params.idComment,
         Body,

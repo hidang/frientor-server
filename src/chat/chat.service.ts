@@ -8,17 +8,43 @@ import { Chat, ChatDocument } from './schema/chat.schema';
 @Injectable()
 export class ChatService {
   constructor(@InjectModel(Chat.name) private chatModel: Model<ChatDocument>) {}
-  async GetChithubOfUserInComment(
+
+  async GetChatInfoOfUserInComment(
     uid: string,
     commentid: string,
   ): Promise<any> {
-    return this.chatModel['GetChithubOfUserInComment'](uid, commentid);
+    return this.chatModel['GetChatInfoOfUserInComment'](uid, commentid);
   }
-  async CreateChithubOfUserInComment(
+
+  async CreateChatOfUserInComment(
     uid: string,
     idComment: string,
-    body: ChatDto,
+    Body: ChatDto,
   ): Promise<any> {
-    return this.chatModel['CreateChithubOfUserInComment'](uid, idComment, body);
+    const chat1 = await this.chatModel.findOne({
+      uid1: uid,
+      uid2: Body.uid2,
+      commentId: idComment,
+    });
+    const chat2 = await this.chatModel.findOne({
+      uid1: Body.uid2,
+      uid2: uid,
+      commentId: idComment,
+    });
+    if (chat1 || chat2) return { message: 'Chat is exist' };
+    try {
+      const chat: Chat = {
+        uid1: uid,
+        uid2: Body.uid2,
+        commentId: idComment,
+        title: '',
+        content: Body.content,
+        public: false,
+      };
+      await new this.chatModel(chat).save();
+      return { message: 'Saved chithub' };
+    } catch (err) {
+      return { message: err };
+    }
   }
 }

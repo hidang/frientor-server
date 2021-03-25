@@ -14,8 +14,7 @@ export class ChatDto {
   uid2: string;
 
   @ApiProperty()
-  @IsString()
-  content: [];
+  content: Array<any>;
 
   // @ApiProperty()
   // @IsString()
