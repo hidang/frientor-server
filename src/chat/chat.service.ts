@@ -2,8 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ChatDto } from './dto/chat.dto';
+import { Document } from 'mongoose';
+
 //-----------------------------------------------------------------------------
 import { Chat, ChatDocument } from './schema/chat.schema';
+import { ChatContentDto } from './dto/chatContent.dto';
 //-----------------------------------------------------------------------------
 @Injectable()
 export class ChatService {
@@ -14,6 +17,13 @@ export class ChatService {
     commentid: string,
   ): Promise<any> {
     return this.chatModel['GetChatInfoOfUserInComment'](uid, commentid);
+  }
+
+  async GetChatContentOfUserInComment(
+    uid: string,
+    idChat: string,
+  ): Promise<any> {
+    return this.chatModel['GetChatContentOfUserInComment'](uid, idChat);
   }
 
   async CreateChatOfUserInComment(
@@ -43,6 +53,29 @@ export class ChatService {
       };
       await new this.chatModel(chat).save();
       return { message: 'Saved chithub' };
+    } catch (err) {
+      return { message: err };
+    }
+  }
+
+  async AddChatContent(
+    user: any,
+    idChat: string,
+    Body: ChatContentDto,
+  ): Promise<{ message: string }> {
+    try {
+      const uid = user.uid;
+      const contentChat: any = {
+        uid: uid,
+        content: Body.content,
+        date: Body.date,
+      };
+      await this.chatModel.findByIdAndUpdate(
+        idChat,
+        { $push: { content: contentChat } },
+        // eslint-disable-next-line prettier/prettier
+      );
+      return { message: 'Saved content' };
     } catch (err) {
       return { message: err };
     }

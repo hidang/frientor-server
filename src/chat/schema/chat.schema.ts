@@ -29,8 +29,32 @@ export const ChatSchema = SchemaFactory.createForClass(Chat);
 ChatSchema.static(
   'GetChatInfoOfUserInComment',
   async function (uid, commentid): Promise<Document<Chat>[]> {
-    return this.find({ uid1: uid, commentId: commentid }, (err, chats) => {
-      return chats.concat(this.find({ uid2: uid, commentId: commentid }));
+    //https://masteringjs.io/tutorials/mongoose/find
+    return await this.find({
+      $or: [
+        {
+          $and: [{ uid1: uid }, { commentId: commentid }],
+        },
+        {
+          $and: [{ uid2: uid }, { commentId: commentid }],
+        },
+      ],
+    });
+  },
+);
+
+ChatSchema.static(
+  'GetChatContentOfUserInComment',
+  async function (uid, idChat): Promise<Document<Chat>[]> {
+    return await this.findOne({
+      $or: [
+        {
+          $and: [{ uid1: uid }, { _id: idChat }],
+        },
+        {
+          $and: [{ uid2: uid }, { _id: idChat }],
+        },
+      ],
     });
   },
 );
