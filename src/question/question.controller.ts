@@ -16,8 +16,8 @@ import { QuestionService } from './question.service';
 import { CommentDto } from './dto/comment.dto';
 import { QuestionDto } from './dto/question.dto';
 import { RepCommentDto } from './dto/repComment.dto';
-import { QuestionDocument } from './schema/question.schema';
-import { RepCommentDocument } from './schema/repComment.schema';
+import { QuestionDocument } from './schema/Question.schema';
+import { RepCommentDocument } from './schema/Repcomment.schema';
 
 @ApiTags('/question')
 @ApiBearerAuth()

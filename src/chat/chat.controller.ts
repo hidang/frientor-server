@@ -11,7 +11,7 @@ import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
 import { ChatService } from './chat.service';
 import { ChatDto } from './dto/chat.dto';
 import { ChatContentDto } from './dto/chatContent.dto';
-import { ChatDocument } from './schema/chat.schema';
+import { ChatDocument } from './schema/Chat.schema';
 
 @ApiTags('/chat')
 @ApiBearerAuth()

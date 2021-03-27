@@ -2,11 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 //-----------------------------------------------------------------------------
-import { Comment, CommentDocument } from './schema/comment.schema';
+import { Comment, CommentDocument } from './schema/Comment.schema';
 import { CommentDto } from './dto/comment.dto';
 import { QuestionDto } from './dto/question.dto';
-import { Question, QuestionDocument } from './schema/question.schema';
-import { RepComment, RepCommentDocument } from './schema/repComment.schema';
+import { Question, QuestionDocument } from './schema/Question.schema';
+import { RepComment, RepCommentDocument } from './schema/Repcomment.schema';
 import { RepCommentDto } from './dto/repComment.dto';
 //-----------------------------------------------------------------------------
 @Injectable()
