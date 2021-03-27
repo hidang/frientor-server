@@ -1,27 +1,15 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
 import * as firebase from 'firebase-admin';
-import * as dotenv from 'dotenv';
-dotenv.config();
-const firebase_params = {
-  type: process.env.TYPE,
-  projectId: process.env.PROJECT_ID,
-  privateKeyId: process.env.PRIVATE_KEY_ID,
-  privateKey: process.env.PRIVATE_KEY,
-  clientEmail: process.env.CLIENT_EMAIL,
-  clientId: process.env.CLIENT_ID,
-  authUri: process.env.AUTH_URI,
-  tokenUri: process.env.TOKEN_URI,
-  authProviderX509CertUrl: process.env.AUTH_PROVIDER_X509_CERT_URL,
-  clientC509CertUrl: process.env.CLIENT_X509_CERT_URL,
-};
+import { fireabseConf } from 'src/config';
+
 @Injectable()
 export class PreauthMiddleware implements NestMiddleware {
   private defaultApp: any;
 
   constructor() {
     this.defaultApp = firebase.initializeApp({
-      credential: firebase.credential.cert(firebase_params),
+      credential: firebase.credential.cert(fireabseConf as any),
     });
   }
 
