@@ -5,7 +5,7 @@ import { ChatDto } from './dto/chat.dto';
 import { Document } from 'mongoose';
 
 //-----------------------------------------------------------------------------
-import { Chat, ChatDocument } from './schema/Chat.schema';
+import { Chat, ChatDocument } from './schema/chat.schema';
 import { ChatContentDto } from './dto/chatContent.dto';
 //-----------------------------------------------------------------------------
 @Injectable()

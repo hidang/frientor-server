@@ -2,7 +2,7 @@ import { CacheModule, Global, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ChatController } from './chat.controller';
 import { ChatService } from './chat.service';
-import { Chat, ChatSchema } from './schema/Chat.schema';
+import { Chat, ChatSchema } from './schema/chat.schema';
 
 @Global()
 @Module({
