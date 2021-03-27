@@ -10,12 +10,14 @@ import { AppController } from './app.controller';
 import { UserModule } from './user/user.module';
 import { QuestionModule } from './question/question.module';
 import { ChatModule } from './chat/chat.module';
+import * as dotenv from 'dotenv';
+dotenv.config();
 @Module({
   imports: [
     UserModule,
     QuestionModule,
     ChatModule,
-    MongooseModule.forRoot('mongodb://localhost:27017/frientor-data', {
+    MongooseModule.forRoot(process.env.MONGOODB_URL, {
       //https://stackoverflow.com/questions/52572852/deprecationwarning-collection-findandmodify-is-deprecated-use-findoneandupdate
       useFindAndModify: false,
     }),
