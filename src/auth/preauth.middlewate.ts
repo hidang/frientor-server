@@ -1,7 +1,7 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
 import * as firebase from 'firebase-admin';
-import { fireabseConf } from 'src/config';
+import { fireabseConf } from 'src/config-fireabse';
 
 @Injectable()
 export class PreauthMiddleware implements NestMiddleware {
