@@ -18,11 +18,11 @@ async function bootstrap() {
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Frientor API')
     .setVersion('1.0')
-    .setBasePath('api')
+    .setBasePath('/')
     .addBearerAuth()
     .build();
   const documents = SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup('api', app, documents);
+  SwaggerModule.setup('/', app, documents);
   //-----------------------------------------------------------------------------
   await app.listen(port);
 }
