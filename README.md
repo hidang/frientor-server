@@ -13,16 +13,9 @@ Please create an .env file or delete the .example postfix to use
 
 # Getting started
 
-- Clone the repository
-
-```
-git clone  <git lab template url> <project_name>
-```
-
 - Install dependencies
 
 ```
-cd <project_name>
 npm install
 ```
 
@@ -41,6 +34,4 @@ $ npm run start
 # watch mode
 $ npm run start:dev
 
-# production mode
-$ npm run start:prod
 ```
