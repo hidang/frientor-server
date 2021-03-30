@@ -9,7 +9,7 @@
 
 # Environment vars
 
-This project uses the following environment variables:
+Please create an .env file or delete the .example postfix to use
 
 # Getting started
 
